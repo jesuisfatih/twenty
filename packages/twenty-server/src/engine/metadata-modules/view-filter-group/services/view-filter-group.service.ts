@@ -4,6 +4,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, type Repository } from 'typeorm';
 
 import { ApplicationService } from 'src/engine/core-modules/application/services/application.service';
+import {
+  FlatEntityMapsException,
+  FlatEntityMapsExceptionCode,
+} from 'src/engine/metadata-modules/flat-entity/exceptions/flat-entity-maps.exception';
 import { WorkspaceManyOrAllFlatEntityMapsCacheService } from 'src/engine/metadata-modules/flat-entity/services/workspace-many-or-all-flat-entity-maps-cache.service';
 import { findFlatEntityByIdInFlatEntityMapsOrThrow } from 'src/engine/metadata-modules/flat-entity/utils/find-flat-entity-by-id-in-flat-entity-maps-or-throw.util';
 import { findFlatEntityByUniversalIdentifierOrThrow } from 'src/engine/metadata-modules/flat-entity/utils/find-flat-entity-by-universal-identifier-or-throw.util';
@@ -64,28 +68,55 @@ export class ViewFilterGroupService {
         flatViewFilterGroupMaps: existingFlatViewFilterGroupMaps,
       });
 
-    const buildAndRunResult =
-      await this.workspaceMigrationValidateBuildAndRunService.validateBuildAndRunWorkspaceMigration(
-        {
-          allFlatEntityOperationByMetadataName: {
-            viewFilterGroup: {
-              flatEntityToCreate: [flatViewFilterGroupToCreate],
-              flatEntityToDelete: [],
-              flatEntityToUpdate: [],
+    try {
+      const buildAndRunResult =
+        await this.workspaceMigrationValidateBuildAndRunService.validateBuildAndRunWorkspaceMigration(
+          {
+            allFlatEntityOperationByMetadataName: {
+              viewFilterGroup: {
+                flatEntityToCreate: [flatViewFilterGroupToCreate],
+                flatEntityToDelete: [],
+                flatEntityToUpdate: [],
+              },
             },
+            workspaceId,
+            isSystemBuild: false,
+            applicationUniversalIdentifier:
+              workspaceCustomFlatApplication.universalIdentifier,
           },
-          workspaceId,
-          isSystemBuild: false,
-          applicationUniversalIdentifier:
-            workspaceCustomFlatApplication.universalIdentifier,
-        },
-      );
+        );
 
-    if (buildAndRunResult.status === 'fail') {
-      throw new WorkspaceMigrationBuilderException(
-        buildAndRunResult,
-        'Multiple validation errors occurred while creating view filter group',
-      );
+      if (buildAndRunResult.status === 'fail') {
+        throw new WorkspaceMigrationBuilderException(
+          buildAndRunResult,
+          'Multiple validation errors occurred while creating view filter group',
+        );
+      }
+    } catch (error) {
+      if (
+        error instanceof FlatEntityMapsException &&
+        error.code === FlatEntityMapsExceptionCode.ENTITY_ALREADY_EXISTS
+      ) {
+        const {
+          flatViewFilterGroupMaps:
+            existingFlatViewFilterGroupMapsAfterConflict,
+        } =
+          await this.flatEntityMapsCacheService.getOrRecomputeManyOrAllFlatEntityMaps(
+            {
+              workspaceId,
+              flatMapsKeys: ['flatViewFilterGroupMaps'],
+            },
+          );
+
+        return fromFlatViewFilterGroupToViewFilterGroupDto(
+          findFlatEntityByIdInFlatEntityMapsOrThrow({
+            flatEntityId: flatViewFilterGroupToCreate.id,
+            flatEntityMaps: existingFlatViewFilterGroupMapsAfterConflict,
+          }),
+        );
+      }
+
+      throw error;
     }
 
     const {
