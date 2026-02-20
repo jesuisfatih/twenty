@@ -1,0 +1,243 @@
+# Bug #4056: 
+
+## CRITICAL: Working Directory
+
+Your working directory is `/work/worktrees/twentyhq-twenty-wt-2959`. This is your primary repository (`twentyhq/twenty`).
+All edits MUST be performed within this directory.
+
+## Sentry Error Details (TOON format)
+
+Error information from Sentry (TOON = compact CSV-like format for lists):
+
+```
+event_info:
+  title: Error: Should never occur; encountered unknown fields clientId in objectMetadataItem opportunity
+  type: error
+  platform: javascript
+  culprit: /objects/opportunities
+  release: {'id': 1681682497; 'version': 'v1.18.1'; 'status': 'open'; 'shortVersion': 'v1.18.1'; 'versionInfo': {'package': None; 'version': {'raw': 'v1.18.1'}; 'description': 'v1.18.1'; 'buildHash': None}; 'ref...
+user:
+  id: 139a8104-2003-4102-a494-c978c252a61e
+  email: luis.lamela@otiima.com
+  geo: country_code=PT, city=Caldas da Rainha, region=Portugal
+exceptions[1]{type,value,mechanism}:
+  Error,Should never occur; encountered unknown fields clientId in objectMetadataItem opportunity,handled=True
+stack_frames[10]:
+  [+] ../../src/modules/page-layout/widgets/field/components/FieldWidgetRelationEditAction.tsx:79:5
+      fn: handleSubmit (module: src/modules/page-layout/widgets/field/components/FieldWidgetRelationEditAction)
+          80: recordId,
+          81: fieldDefinition,
+          82: valueToPersist: newValue,
+          83: });
+          84: };
+  [-] ../../../../node_modules/recoil/es/index.js:6137:12
+      fn: persistField (module: recoil/es/index)
+          6138: }, deps != null ? [...deps, storeRef] : undefined // eslint-disable-line fb-www/react-hooks-deps
+          6139: );
+          6140: }
+          6141: 
+          6142: var Recoil_useRecoilCallback = {
+  [-] ../../../../node_modules/recoil/es/index.js:6081:3
+      fn: recoilCallback (module: recoil/es/index)
+          6082: const errMsg = 'useRecoilCallback() expects a function that returns a function: ' + 'it accepts a function of the type (RecoilInterface) ...
+          6083: 
+          6084: if (typeof fn !== 'function') {
+          6085: throw Recoil_err(errMsg);
+          6086: } // Clone the snapshot lazily to avoid overhead if the callback does not use it.
+  [-] ../../../../node_modules/recoil/es/index.js:3466:3
+      fn: batchUpdates (module: recoil/es/index)
+          3467: let batchEnd = () => undefined;
+          3468: 
+          3469: try {
+          3470: batchEnd = batchStart$1();
+          3471: callback();
+  [-] ../../../../node_modules/react-dom/cjs/react-dom.production.min.js:273:42
+      fn: Qk (module: react-dom/cjs/react-dom.production)
+          274: function Kk(a,b){a.finishedWork=null;a.finishedLanes=0;var c=a.timeoutHandle;-1!==c&&(a.timeoutHandle=-1,Gf(c));if(null!==Y)for(c=Y.return;n ...
+          275: 0;b<fh.length;b++)if(c=fh[b],d=c.interleaved,null!==d){c.interleaved=null;var e=d.next,f=c.pending;if(null!==f){var g=f.next;f.next=e;d.next ...
+          276: function Mk(a,b){do{var c=Y;try{$g();Fh.current=Rh;if(Ih){for(var d=M.memoizedState;null!==d;){var e=d.queue;null!==e&&(e.pending=null);d=d. ...
+          277: m.lanes=r.lanes):(m.updateQueue=null,m.memoizedState=null)}var y=Ui(g);if(null!==y){y.flags&=-257;Vi(y,g,h,f,b);y.mode&1&&Si(f,l,b);b=y;k=l; ...
+          278: b&=-b;f.lanes|=b;var x=Ni(f,k,b);ph(f,x);break a;case 1:h=k;var w=f.type,u=f.stateNode;if(0===(f.flags&128)&&("function"===typeof w.getDeriv ...
+  [-] ../../../../node_modules/recoil/es/index.js:3471:7
+      fn: a (module: recoil/es/index)
+          3472: } finally {
+          3473: batchEnd();
+          3474: }
+          3475: });
+          3476: };
+  [-] ../../../../node_modules/recoil/es/index.js:6114:11
+      fn: callback (module: recoil/es/index)
+          6115: });
+          6116: !!(ret instanceof Sentinel) ? process.env.NODE_ENV !== "production" ? Recoil_invariant(false, 'batchUpdates should return immediately') :  ...
+          6117: 
+          6118: if (Recoil_isPromise(ret)) {
+          6119: ret = ret.finally(() => {
+  [+] ../../src/modules/object-record/record-field/ui/hooks/usePersistField.ts:228:37
+      fn: callback (module: src/modules/object-record/record-field/ui/hooks/usePersistField)
+          229: objectNameSingular: objectMetadataItem.nameSingular,
+          230: idToUpdate: recordId,
+          231: updateOneRecordInput: {
+          232: [getForeignKeyNameFromRelationFieldName(fieldName)]:
+          233: valueToPersist?.id ?? null,
+  [+] ../../src/modules/object-record/hooks/useUpdateOneRecord.ts:67:7
+      fn: <object>.updateOneRecord (module: src/modules/object-record/hooks/useUpdateOneRecord)
+          68: objectMetadataItem,
+          69: currentWorkspaceMember,
+          70: recordInput: updateOneRecordInput,
+          71: cache: apolloCoreClient.cache,
+          72: objectMetadataItems,
+  [+] ../../src/modules/object-record/utils/computeOptimisticRecordFromInput.ts:72:11
+      fn: computeOptimisticRecordFromInput (module: src/modules/object-record/utils/computeOptimisticRecordFromInput)
+          73: `Should never occur, encountered unknown fields ${unknownRecordInputFields.join(', ')} in objectMetadataItem ${objectMetadataItem.name ...
+          74: );
+          75: }
+          76: 
+          77: const optimisticRecord: Partial<ObjectRecord> = {};
+request:
+  url: https://otiima.twenty.com/objects/opportunities
+contexts:
+  browser: browser=Chrome 145.0.0; name=Chrome; version=145.0.0
+  os: os=Windows >=10; name=Windows; version=>=10
+breadcrumbs_ui.click[16]{ts,type,level,msg}:
+  12:12:28,default,i,html.dark > body > div.css-o3471q > div.css-bttbgg > div.css-17jnh5o
+  12:12:30,default,i,div.css-17jnh5o > div.css-1k5l5tl > div.css-18kzbsm > input#:r3s1:.css-1ecctqn
+  12:12:32,default,i,div.css-2g9rde > div.css-19ftrvw > div.css-1waul73 > div.s18eta8o
+  12:12:35,default,i,div.css-bttbgg > div.css-1k5l5tl > div.css-18kzbsm > input#:r3sc:.css-1ecctqn
+  12:12:38,default,i,div.css-4uy5i5 > div.css-hud26u > div#title-id-1771589558636.s1a0c8w6
+  12:12:47,default,i,div.css-1c358af > div.css-10i1eo3.esndde70 > div.css-xgr6rn.e4a7fms4
+  12:12:48,default,i,div.css-17jnh5o > div.css-1k5l5tl > div.css-18kzbsm > input#:r3sf:.css-1ecctqn
+  12:12:53,default,i,div.css-bttbgg > div.css-1k5l5tl > div.css-18kzbsm > input#:r3sd:.css-1ecctqn
+  12:12:56,default,i,div.css-bttbgg > div.css-1k5l5tl > div.css-18kzbsm > input#:r3sl:.css-1ecctqn
+  12:12:58,default,i,div.css-1ee28yx > div.css-1vlzflq > div.css-1c358af > div.css-10i1eo3.esndde70
+  12:13:01,default,i,div.css-bttbgg > div.css-1k5l5tl > div.css-18kzbsm > input#:r3sq:.css-1ecctqn
+  12:13:05,default,i,div.css-10i1eo3.esndde70 > div.css-xgr6rn.e4a7fms4 > h3.s1dcywfc
+  12:13:08,default,i,div.css-q6blf8 > div > div.widget.css-1sylgvx
+  12:13:14,default,i,div.css-q6blf8 > div > div.widget.css-1sylgvx > div.css-r2fk2j
+  12:13:18,default,i,div.css-44gx6g > div.css-4uy5i5 > button.css-1nkx7d1.ecxbnmf0 > svg
+  12:13:27,default,i,div.css-1te43ul.e4a7fms1 > div#title-id-1771589605565.s1a0c8w6
+breadcrumbs_console[7]{ts,level,msg}:
+  12:12:30,w,Warning: fragment with name OpportunityFragment already exists. graphql-tag enforces all fragment na...
+  12:12:31,w,An error occurred! For more details; see the full error text at https://go.apollo.dev/c/err#%7B%22ve...
+  12:12:31,w,An error occurred! For more details; see the full error text at https://go.apollo.dev/c/err#%7B%22ve...
+  12:12:31,w,An error occurred! For more details; see the full error text at https://go.apollo.dev/c/err#%7B%22ve...
+  12:13:09,w,An error occurred! For more details; see the full error text at https://go.apollo.dev/c/err#%7B%22ve...
+  12:13:09,w,An error occurred! For more details; see the full error text at https://go.apollo.dev/c/err#%7B%22ve...
+  12:13:09,w,An error occurred! For more details; see the full error text at https://go.apollo.dev/c/err#%7B%22ve...
+breadcrumbs_fetch[23]{ts,method,url,status}:
+  12:12:31,POST,https://otiima.twenty.com/graphql,200
+  12:12:31,POST,https://otiima.twenty.com/graphql,200
+  12:12:31,POST,https://otiima.twenty.com/graphql,200
+  12:12:31,POST,https://otiima.twenty.com/graphql,200
+  12:12:31,POST,https://otiima.twenty.com/graphql,200
+  12:12:31,POST,https://otiima.twenty.com/graphql,200
+  12:12:37,POST,https://otiima.twenty.com/metadata,200
+  12:12:57,POST,https://otiima.twenty.com/metadata,200
+  12:12:58,POST,https://otiima.twenty.com/metadata,200
+  12:13:02,POST,https://otiima.twenty.com/metadata,200
+  12:13:05,POST,https://otiima.twenty.com/metadata,200
+  12:13:09,POST,https://otiima.twenty.com/graphql,200
+  12:13:09,POST,https://otiima.twenty.com/graphql,200
+  12:13:09,POST,https://otiima.twenty.com/graphql,200
+  12:13:09,POST,https://otiima.twenty.com/graphql,200
+  12:13:09,POST,https://otiima.twenty.com/graphql,200
+  12:13:09,POST,https://otiima.twenty.com/graphql,200
+  12:13:18,POST,https://otiima.twenty.com/graphql,200
+  12:13:20,POST,https://otiima.twenty.com/graphql,
+  12:13:20,POST,https://otiima.twenty.com/graphql,
+  12:13:20,POST,https://otiima.twenty.com/graphql,200
+  12:13:20,POST,https://otiima.twenty.com/graphql,
+  12:13:21,POST,https://otiima.twenty.com/graphql,200
+breadcrumbs_ui.input[4]{ts,type,level,msg}:
+  12:12:43,default,i,div.css-bmk3tx > div.css-12afo38 > input.css-11bi6ax
+  12:12:45,default,i,div.css-bmk3tx > div.css-12afo38 > input.css-11bi6ax
+  12:12:49,default,i,div.css-17jnh5o > div.css-1k5l5tl > div.css-18kzbsm > input#:r3sf:.css-1ecctqn
+  12:13:19,default,i,div.css-bmk3tx > div.css-12afo38 > input.css-11bi6ax
+```
+
+## Severity Assessment
+
+After analyzing the bug, determine severity independently based on your analysis:
+- **critical**: User CANNOT complete a critical task. Crashes, core feature broken, data loss risk.
+- **medium**: User CAN complete tasks but degraded experience. Non-critical feature broken, workaround exists.
+- **low**: User unlikely to notice. Cosmetic, rare edge case, transient error that auto-recovers.
+
+Your severity assessment in the output JSON is the FINAL severity that will be used.
+## STRICT GIT RULES (violations = failed run)
+
+- You are already on the correct fix branch — do NOT run `git checkout`, `git switch`, or `git merge`
+- **NEVER run `git merge`** — merging other branches (feature branches, main, etc.) is FORBIDDEN
+- **NEVER run `git checkout` on a different branch** — stay on your current branch at all times
+- **NEVER run `git rebase`** — rebasing is not needed and can corrupt the worktree
+- If the code you need to fix is not on this branch, fix the code that IS on this branch
+  or report that the fix cannot be applied — do NOT merge or pull in other branches
+- **NEVER run `git add`, `git commit`, or `git push`** — the system handles all git write operations automatically after your analysis
+- Only allowed git commands: `git blame`, `git log`, `git diff`, `git show` (read-only)
+
+## Your Task (in this order)
+
+1. **Find the Root Cause**
+   - Locate the exact file and line where the bug originates
+   - Understand why this error occurs
+
+2. **Git Blame Analysis**
+   - Use `git blame` to find the commit that introduced this bug
+   - Note the commit SHA, author, and date
+
+3. **Fix the Bug**
+   - Implement a **minimal, targeted fix** — only change what's necessary to resolve this specific error
+   - **NEVER modify shared/generic utilities, base classes, or ORM internals** to work around a missing field or feature.
+     Instead, fix the specific code paths that trigger the error (e.g. add a guard/try-catch in the caller).
+     Changing a generic utility to silently skip errors is ALWAYS wrong — it masks future bugs.
+   - Do NOT refactor surrounding code, add new features, or make unrelated improvements
+   - Do NOT build new components, screens, or functionality — only fix the reported error
+   - Add appropriate error handling if needed
+   - Do NOT run any git write commands (`git add`, `git commit`, `git push`) — the system handles committing and pushing automatically after your analysis
+
+4. **Output Structured Analysis**
+   At the end of your response, output a JSON block between these markers:
+
+```
+SONARLY_ANALYSIS_START
+{
+  "title": "User-focused title (max 60 chars)",
+  "severity": "critical|medium|low",
+  "summary": "1-2 sentence summary of the bug",
+  "user_impact": "Who was impacted and how they were impacted",
+  "evidence": {  // Each code item: file (relative path from repo root), line (integer), snippet (faulty code, max ~10 lines). Multiple items for multiple files. {} if no evidence.
+    "code": [
+      {"file": "src/checkout/process.py", "line": 42, "snippet": "def process_order(order_id):\n    orders = db.query(\"SELECT * FROM orders\")  # missing WHERE clause"}
+    ]
+  },
+  "root_cause": {
+    "explanation": "Root cause explanation. Use plain text only — NO bold, italic, or code backticks. When listing multiple points, use a numbered list (1. 2. 3.) with each item on its own line. Include who introduced it (git blame author), when (date), and why.",
+    "blame": {
+      "commit_sha": "abc123def (the full commit SHA from git blame, or null if unknown)",
+      "author": "Author Name (from git blame output, or null if unknown)",
+      "date": "2026-01-15 (date from git blame, or null if unknown)",
+      "commit_url": "https://github.com/{owner}/{repo}/commit/{sha} (build from git remote get-url origin + sha, strip any access token, or null)",
+      "explanation": "Brief explanation of when/who introduced the bug (e.g. Added in commit abc123 by John on Jan 15)"
+    }
+  },
+  "suggested_fix": {
+    "explanation": "What the fix does and why it solves the problem. Use plain text only — NO bold, italic, or code backticks. When listing multiple steps, use a numbered list (1. 2. 3.) with each item on its own line.",
+    "files_changed": ["path/to/file.py", "path/to/other.py (list of file paths you created or modified in the fix)"]
+  }
+}
+SONARLY_ANALYSIS_END
+```
+
+CRITICAL: The JSON block is the ONLY part of your response shown to the user.
+Everything outside the SONARLY_ANALYSIS markers is discarded. Put ALL investigation details,
+evidence (code snippets and log lines), and findings INSIDE the JSON fields,
+especially root_cause.explanation, and summary. Do NOT write a separate investigation summary before the JSON.
+
+IMPORTANT: The JSON between SONARLY_ANALYSIS_START and SONARLY_ANALYSIS_END must be valid JSON.
+
+## Critical: ALWAYS output the analysis JSON
+
+You MUST output SONARLY_ANALYSIS_START...SONARLY_ANALYSIS_END even if you could not find the code or fix the bug.
+If you cannot locate the relevant code or create a fix,
+explain what you found in the `root_cause.explanation` field.
+A run without the analysis JSON is a FAILED run — never end without it.
+
+Don't ask any questions to the user

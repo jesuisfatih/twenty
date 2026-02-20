@@ -62,16 +62,26 @@ export const useUpdateOneRecord = () => {
       );
     }
 
-    const optimisticRecordInput =
-      optimisticRecord ??
-      computeOptimisticRecordFromInput({
-        objectMetadataItem,
-        currentWorkspaceMember,
-        recordInput: updateOneRecordInput,
-        cache: apolloCoreClient.cache,
-        objectMetadataItems,
-        objectPermissionsByObjectMetadataId,
-      });
+    let optimisticRecordInput: Partial<ObjectRecord>;
+
+    try {
+      optimisticRecordInput =
+        optimisticRecord ??
+        computeOptimisticRecordFromInput({
+          objectMetadataItem,
+          currentWorkspaceMember,
+          recordInput: updateOneRecordInput,
+          cache: apolloCoreClient.cache,
+          objectMetadataItems,
+          objectPermissionsByObjectMetadataId,
+        });
+    } catch (error) {
+      console.warn(
+        'Failed to compute optimistic record, skipping optimistic update:',
+        error,
+      );
+      optimisticRecordInput = {};
+    }
 
     const computedRecordGqlFields =
       recordGqlFields ??
