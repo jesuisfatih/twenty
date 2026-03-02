@@ -20,6 +20,7 @@ import { ViewBarRecordFieldEffect } from '@/views/components/ViewBarRecordFieldE
 import { ViewBarRecordFilterEffect } from '@/views/components/ViewBarRecordFilterEffect';
 import { ViewBarRecordFilterGroupEffect } from '@/views/components/ViewBarRecordFilterGroupEffect';
 import { ViewBarRecordSortEffect } from '@/views/components/ViewBarRecordSortEffect';
+import { ViewRelationsSSEEffect } from '@/views/components/ViewRelationsSSEEffect';
 import { ViewBarFilterDropdownIds } from '@/views/constants/ViewBarFilterDropdownIds';
 import { UpdateViewButtonGroup } from './UpdateViewButtonGroup';
 import { ViewBarDetails } from './ViewBarDetails';
@@ -54,6 +55,7 @@ export const ViewBar = ({
       <QueryParamsFiltersEffect />
       <QueryParamsSortsEffect />
       <QueryParamsCleanupEffect />
+      <ViewRelationsSSEEffect />
       <ViewBarPageTitle />
       <TopBar
         className={className}
