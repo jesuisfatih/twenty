@@ -17,11 +17,6 @@ export const AdvancedFilterFieldSelectDropdownContent = ({
   const shouldShowCompositeSelectionSubMenu =
     objectFilterDropdownIsSelectingCompositeField;
 
-  console.log({
-    objectFilterDropdownIsSelectingCompositeField,
-    shouldShowCompositeSelectionSubMenu,
-  });
-
   return shouldShowCompositeSelectionSubMenu ? (
     <AdvancedFilterSubFieldSelectMenu recordFilterId={recordFilterId} />
   ) : (

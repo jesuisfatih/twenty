@@ -118,21 +118,11 @@ export const AdvancedFilterFieldSelectMenu = ({
       recordFilterId,
     });
 
-    console.log({
-      isComposite: isCompositeFilterableFieldType(filterType),
-      filterType,
-    });
-
     if (isCompositeFilterableFieldType(filterType)) {
       setObjectFilterDropdownSubMenuFieldType(filterType);
 
       setFieldMetadataItemIdUsedInDropdown(selectedFieldMetadataItem.id);
       setObjectFilterDropdownIsSelectingCompositeField(true);
-
-      console.log({
-        selectedFieldMetadataItem,
-        advancedFilterFieldSelectDropdownId,
-      });
     } else {
       closeAdvancedFilterFieldSelectDropdown();
     }

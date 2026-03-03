@@ -26,10 +26,5 @@ export const useAtomComponentState = <StateType>(
     instanceIdFromProps,
   );
 
-  console.log({
-    key: componentState.key,
-    instanceId,
-  });
-
   return useAtom(componentState.atomFamily({ instanceId }));
 };
