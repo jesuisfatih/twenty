@@ -4,6 +4,7 @@ import { ObjectMetadataItemSSEEffect } from '@/metadata-store/effect-components/
 import { PageLayoutSSEEffect } from '@/metadata-store/effect-components/PageLayoutSSEEffect';
 import { PageLayoutTabSSEEffect } from '@/metadata-store/effect-components/PageLayoutTabSSEEffect';
 import { PageLayoutWidgetSSEEffect } from '@/metadata-store/effect-components/PageLayoutWidgetSSEEffect';
+import { ViewRelationsSSEEffect } from '@/metadata-store/effect-components/ViewRelationsSSEEffect';
 import { ViewSSEEffect } from '@/metadata-store/effect-components/ViewSSEEffect';
 import { SSEClientEffect } from '@/sse-db-event/components/SSEClientEffect';
 import { SSEEventStreamEffect } from '@/sse-db-event/components/SSEEventStreamEffect';
@@ -26,7 +27,7 @@ export const SSEProvider = ({ children }: SSEProviderProps) => {
       <PageLayoutSSEEffect />
       <PageLayoutTabSSEEffect />
       <PageLayoutWidgetSSEEffect />
-      {/* <ViewFieldSSEEffect /> */}
+      <ViewRelationsSSEEffect />
       <ViewSSEEffect />
       {children}
     </>
