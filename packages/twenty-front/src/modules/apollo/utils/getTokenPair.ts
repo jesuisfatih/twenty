@@ -1,10 +1,9 @@
 import { isDefined } from 'twenty-shared/utils';
 import { type AuthTokenPair } from '~/generated-metadata/graphql';
-import { cookieStorage } from '~/utils/cookie-storage';
 import { isValidAuthTokenPair } from './isValidAuthTokenPair';
 
 export const getTokenPair = (): AuthTokenPair | undefined => {
-  const stringTokenPair = cookieStorage.getItem('tokenPair');
+  const stringTokenPair = localStorage.getItem('tokenPair');
 
   if (!isDefined(stringTokenPair)) {
     // oxlint-disable-next-line no-console
@@ -17,13 +16,13 @@ export const getTokenPair = (): AuthTokenPair | undefined => {
     const parsedTokenPair = JSON.parse(stringTokenPair);
 
     if (!isValidAuthTokenPair(parsedTokenPair)) {
-      cookieStorage.removeItem('tokenPair');
+      localStorage.removeItem('tokenPair');
       return undefined;
     }
 
     return parsedTokenPair;
   } catch {
-    cookieStorage.removeItem('tokenPair');
+    localStorage.removeItem('tokenPair');
     return undefined;
   }
 };

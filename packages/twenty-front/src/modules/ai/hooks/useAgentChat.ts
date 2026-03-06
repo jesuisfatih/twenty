@@ -25,7 +25,6 @@ import { useCallback } from 'react';
 import { type ExtendedUIMessage } from 'twenty-shared/ai';
 import { isDefined } from 'twenty-shared/utils';
 import { REACT_APP_SERVER_BASE_URL } from '~/config';
-import { cookieStorage } from '~/utils/cookie-storage';
 
 export const useAgentChat = (uiMessages: ExtendedUIMessage[]) => {
   const setTokenPair = useSetAtomState(tokenPairState);
@@ -76,7 +75,7 @@ export const useAgentChat = (uiMessages: ExtendedUIMessage[]) => {
         return null;
       }
 
-      cookieStorage.setItem('tokenPair', JSON.stringify(renewedTokens));
+      localStorage.setItem('tokenPair', JSON.stringify(renewedTokens));
       setTokenPair(renewedTokens);
 
       const updatedHeaders = new Headers(init?.headers ?? {});

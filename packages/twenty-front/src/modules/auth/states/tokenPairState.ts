@@ -2,11 +2,7 @@ import { createAtomState } from '@/ui/utilities/state/jotai/utils/createAtomStat
 import { type AuthTokenPair } from '~/generated-metadata/graphql';
 
 export const tokenPairState = createAtomState<AuthTokenPair | null>({
-  key: 'tokenPairState',
+  key: 'tokenPair',
   defaultValue: null,
-  useCookieStorage: {
-    cookieKey: 'tokenPair',
-    validateInitFn: (payload: AuthTokenPair) =>
-      Boolean(payload['accessOrWorkspaceAgnosticToken']),
-  },
+  useLocalStorage: true,
 });
