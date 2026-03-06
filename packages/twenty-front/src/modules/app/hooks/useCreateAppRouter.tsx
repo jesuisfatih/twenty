@@ -1,6 +1,7 @@
 import { AppRouterProviders } from '@/app/components/AppRouterProviders';
 import { SettingsRoutes } from '@/app/components/SettingsRoutes';
 import { VerifyLoginTokenEffect } from '@/auth/components/VerifyLoginTokenEffect';
+import { IframeAuthEffect } from '@/auth/components/IframeAuthEffect';
 
 import { VerifyEmailEffect } from '@/auth/components/VerifyEmailEffect';
 import indexAppPath from '@/navigation/utils/indexAppPath';
@@ -76,6 +77,7 @@ export const useCreateAppRouter = (
         </Route>
         <Route element={<BlankLayout />}>
           <Route path={AppPath.Authorize} element={<Authorize />} />
+          <Route path={AppPath.IframeAuth} element={<IframeAuthEffect />} />
         </Route>
       </Route>,
     ),

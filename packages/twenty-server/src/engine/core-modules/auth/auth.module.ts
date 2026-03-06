@@ -12,6 +12,7 @@ import { ApplicationModule } from 'src/engine/core-modules/application/applicati
 import { AuditModule } from 'src/engine/core-modules/audit/audit.module';
 import { GoogleAPIsAuthController } from 'src/engine/core-modules/auth/controllers/google-apis-auth.controller';
 import { GoogleAuthController } from 'src/engine/core-modules/auth/controllers/google-auth.controller';
+import { IframeAuthController } from 'src/engine/core-modules/auth/controllers/iframe-auth.controller';
 import { MicrosoftAPIsAuthController } from 'src/engine/core-modules/auth/controllers/microsoft-apis-auth.controller';
 import { MicrosoftAuthController } from 'src/engine/core-modules/auth/controllers/microsoft-auth.controller';
 import { OAuthPropagatorController } from 'src/engine/core-modules/auth/controllers/oauth-propagator.controller';
@@ -129,6 +130,7 @@ import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
     MicrosoftAPIsAuthController,
     OAuthPropagatorController,
     SSOAuthController,
+    IframeAuthController,
   ],
   providers: [
     SignInUpService,

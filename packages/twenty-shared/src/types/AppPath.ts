@@ -30,6 +30,7 @@ export enum AppPath {
   DevelopersCatchAll = `/${Developers}/*`,
 
   Authorize = '/authorize',
+  IframeAuth = '/iframe-auth',
 
   // 404 page not found
   NotFoundWildcard = '*',
