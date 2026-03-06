@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { tokenPairState } from '@/auth/states/tokenPairState';
-import { useSetAtomState } from '@/ui/utilities/state/jotai/useSetAtomState';
+import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
 import { AppPath } from 'twenty-shared/types';
 
 /**
