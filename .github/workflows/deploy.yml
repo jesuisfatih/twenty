@@ -58,11 +58,15 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           command_timeout: 10m
           script: |
+            set -e
             cd /opt/apps/custom/multiservice/twenty
+            echo "Pulling latest image..."
             docker pull ghcr.io/jesuisfatih/twenty:latest
+            echo "Restarting containers..."
             docker compose down
             docker compose up -d
             echo "Waiting for Twenty to be healthy..."
+            set +e
             for i in $(seq 1 60); do
               if docker exec multiservice-twenty-server curl -sf http://localhost:3000/healthz > /dev/null 2>&1; then
                 echo "Twenty CRM deployed successfully!"
@@ -71,4 +75,5 @@ jobs:
               sleep 5
             done
             echo "Health check timeout, checking logs..."
-            docker logs multiservice-twenty-server --tail 20
+            docker logs multiservice-twenty-server --tail 30
+            exit 1
