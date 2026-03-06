@@ -52,11 +52,9 @@ export const IframeAuthEffect = () => {
       // Also set the Jotai atom state
       setTokenPair(tokens);
 
-      // Clear the hash fragment for security
-      window.location.hash = '';
-
-      // Navigate to the main app
-      navigate(AppPath.Index);
+      // Force a fresh app bootstrap with the stored tokens.
+      // This avoids auth/metadata providers initializing in an unauthenticated state.
+      window.location.replace(AppPath.Index);
     } catch (e) {
       setError(
         `Failed to process auth tokens: ${e instanceof Error ? e.message : 'Unknown error'}`,
