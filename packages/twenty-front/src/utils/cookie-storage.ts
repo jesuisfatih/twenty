@@ -15,8 +15,8 @@ class CookieStorage {
     this.keys.add(key);
 
     const secureAttributes = {
-      secure: window.location.protocol === 'https:',
-      sameSite: 'lax' as const,
+      secure: true,
+      sameSite: 'none' as const,
       ...attributes,
     };
 
