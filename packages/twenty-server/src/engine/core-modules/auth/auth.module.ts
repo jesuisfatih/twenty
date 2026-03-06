@@ -62,6 +62,7 @@ import { DataSourceModule } from 'src/engine/metadata-modules/data-source/data-s
 import { ObjectMetadataEntity } from 'src/engine/metadata-modules/object-metadata/object-metadata.entity';
 import { PermissionsModule } from 'src/engine/metadata-modules/permissions/permissions.module';
 import { UserRoleModule } from 'src/engine/metadata-modules/user-role/user-role.module';
+import { WorkspaceCacheStorageModule } from 'src/engine/workspace-cache-storage/workspace-cache-storage.module';
 import { WorkspaceCacheModule } from 'src/engine/workspace-cache/workspace-cache.module';
 import { WorkspaceDataSourceModule } from 'src/engine/workspace-datasource/workspace-datasource.module';
 import { WorkspaceManagerModule } from 'src/engine/workspace-manager/workspace-manager.module';
@@ -120,6 +121,7 @@ import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
     ApplicationRegistrationModule,
     ApplicationModule,
     WorkspaceCacheModule,
+    WorkspaceCacheStorageModule,
     SecureHttpClientModule,
     FileModule,
   ],
