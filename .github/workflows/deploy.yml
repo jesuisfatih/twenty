@@ -75,8 +75,8 @@ jobs:
           script: |
             set -e
             cd /opt/apps/custom/multiservice/twenty
-            echo "Pulling latest image..."
-            docker pull ghcr.io/jesuisfatih/twenty:latest
+            echo "Pulling latest images..."
+            docker compose pull
             echo "Restarting containers..."
             docker compose down
             docker compose up -d

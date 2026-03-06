@@ -10,7 +10,6 @@ import {
 import { AuthRestApiExceptionFilter } from 'src/engine/core-modules/auth/filters/auth-rest-api-exception.filter';
 import { AuthService } from 'src/engine/core-modules/auth/services/auth.service';
 import { LoginTokenService } from 'src/engine/core-modules/auth/token/services/login-token.service';
-import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
 import { JwtAuthGuard } from 'src/engine/guards/jwt-auth.guard';
 import { AuthProviderEnum } from 'src/engine/core-modules/workspace/types/workspace.type';
 
@@ -25,7 +24,6 @@ export class IframeAuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly loginTokenService: LoginTokenService,
-    private readonly twentyConfigService: TwentyConfigService,
   ) {}
 
   /**
@@ -64,15 +62,8 @@ export class IframeAuthController {
       JSON.stringify(authTokens.tokens),
     ).toString('base64');
 
-    const forwardedProto = req.headers['x-forwarded-proto'];
-    const forwardedHost = req.headers['x-forwarded-host'];
-    const forwardedPrefix = req.headers['x-forwarded-prefix'];
-    const requestBaseUrl =
-      forwardedProto && forwardedHost
-        ? `${forwardedProto}://${forwardedHost}${forwardedPrefix ?? ''}`
-        : undefined;
     const baseUrl =
-      requestBaseUrl || this.twentyConfigService.get('SERVER_URL');
+      process.env.FRONTEND_BASE_URL || 'https://sales.techifyboost.com';
     const iframeUrl = `${baseUrl}/iframe-auth#t=${tokenPayload}`;
 
     return {
