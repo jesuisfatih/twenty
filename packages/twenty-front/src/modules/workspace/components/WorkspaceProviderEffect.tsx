@@ -10,6 +10,7 @@ import { useGetPublicWorkspaceDataByDomain } from '@/domain-manager/hooks/useGet
 import { useIsCurrentLocationOnDefaultDomain } from '@/domain-manager/hooks/useIsCurrentLocationOnDefaultDomain';
 import { isDefined } from 'twenty-shared/utils';
 import { type WorkspaceUrls } from '~/generated-metadata/graphql';
+import { stripBasePath } from '~/utils/basePath';
 import { getWorkspaceUrl } from '~/utils/getWorkspaceUrl';
 
 const getCurrentSearchParams = (): Record<string, string> =>
@@ -51,7 +52,7 @@ export const WorkspaceProviderEffect = () => {
     ) {
       redirectToWorkspaceDomain(
         getWorkspaceUrl(getPublicWorkspaceData.workspaceUrls),
-        window.location.pathname,
+        stripBasePath(window.location.pathname),
         getCurrentSearchParams(),
       );
     }
@@ -74,7 +75,7 @@ export const WorkspaceProviderEffect = () => {
       initializeQueryParamState();
       redirectToWorkspaceDomain(
         lastAuthenticatedWorkspaceDomain.workspaceUrl,
-        window.location.pathname,
+        stripBasePath(window.location.pathname),
         getCurrentSearchParams(),
       );
     }

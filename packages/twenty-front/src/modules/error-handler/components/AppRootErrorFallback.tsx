@@ -4,6 +4,7 @@ import { t } from '@lingui/core/macro';
 import { useContext } from 'react';
 import { IconReload } from 'twenty-ui/display';
 import { ThemeContext, themeCssVariables } from 'twenty-ui/theme-constants';
+import { getPublicAssetUrl } from '~/utils/basePath';
 
 type AppRootErrorFallbackProps = AppErrorDisplayProps;
 
@@ -111,11 +112,15 @@ export const AppRootErrorFallback = ({
         <StyledEmptyContainer>
           <StyledImageContainer>
             <StyledBackgroundImage
-              src="/images/placeholders/background/error_index_bg.png"
+              src={getPublicAssetUrl(
+                '/images/placeholders/background/error_index_bg.png',
+              )}
               alt={t`Background`}
             />
             <StyledInnerImage
-              src="/images/placeholders/moving-image/error_index.png"
+              src={getPublicAssetUrl(
+                '/images/placeholders/moving-image/error_index.png',
+              )}
               alt={t`Error illustration`}
             />
           </StyledImageContainer>

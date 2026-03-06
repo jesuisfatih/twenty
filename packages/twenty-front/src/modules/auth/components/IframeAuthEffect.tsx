@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { tokenPairState } from '@/auth/states/tokenPairState';
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
 import { AppPath } from 'twenty-shared/types';
+import { withBasePath } from '~/utils/basePath';
 
 /**
  * IframeAuthEffect reads auth tokens from the URL hash fragment
@@ -54,7 +55,7 @@ export const IframeAuthEffect = () => {
 
       // Force a fresh app bootstrap with the stored tokens.
       // This avoids auth/metadata providers initializing in an unauthenticated state.
-      window.location.replace(AppPath.Index);
+      window.location.replace(withBasePath(AppPath.Index));
     } catch (e) {
       setError(
         `Failed to process auth tokens: ${e instanceof Error ? e.message : 'Unknown error'}`,

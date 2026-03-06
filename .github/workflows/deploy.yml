@@ -41,6 +41,21 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           build-args: |
             REACT_APP_SERVER_BASE_URL=https://sales.techifyboost.com
+            REACT_APP_BASE_PATH=/
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push DTFBank CRM image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./packages/twenty-docker/twenty/Dockerfile
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:dtfbank
+          build-args: |
+            REACT_APP_SERVER_BASE_URL=https://app.dtfbank.com/crm-app
+            REACT_APP_BASE_PATH=/crm-app/
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

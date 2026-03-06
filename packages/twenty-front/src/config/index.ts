@@ -1,3 +1,5 @@
+import { BASE_PATH } from '~/utils/basePath';
+
 const getDefaultUrl = () => {
   if (
     window.location.hostname.endsWith('localhost') ||
@@ -13,7 +15,7 @@ const getDefaultUrl = () => {
     // In prod context, we use index.html + window var to ovewrite it
     return `${window.location.protocol}//${window.location.hostname}${
       window.location.port ? `:${window.location.port}` : ''
-    }`;
+    }${BASE_PATH === '/' ? '' : BASE_PATH}`;
   }
 };
 

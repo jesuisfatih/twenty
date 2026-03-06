@@ -7,6 +7,7 @@ import { UndecoratedLink } from 'twenty-ui/navigation';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 import { REACT_APP_SERVER_BASE_URL } from '~/config';
 import { useRedirectToDefaultDomain } from '~/modules/domain-manager/hooks/useRedirectToDefaultDomain';
+import { getPublicAssetUrl } from '~/utils/basePath';
 
 type LogoProps = {
   primaryLogo?: string | null;
@@ -57,7 +58,7 @@ export const Logo = ({
   onClick,
 }: LogoProps) => {
   const { redirectToDefaultDomain } = useRedirectToDefaultDomain();
-  const defaultPrimaryLogoUrl = `${window.location.origin}/images/icons/android/android-launchericon-192-192.png`;
+  const defaultPrimaryLogoUrl = `${window.location.origin}${getPublicAssetUrl('/images/icons/android/android-launchericon-192-192.png')}`;
 
   const primaryLogoUrl = getImageAbsoluteURI({
     imageUrl: primaryLogo ?? defaultPrimaryLogoUrl,

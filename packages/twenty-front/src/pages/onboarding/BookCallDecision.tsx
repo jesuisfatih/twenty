@@ -9,6 +9,7 @@ import { AppPath } from 'twenty-shared/types';
 import { LightButton, MainButton } from 'twenty-ui/input';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 import { useSkipBookOnboardingStepMutation } from '~/generated-metadata/graphql';
+import { getPublicAssetUrl } from '~/utils/basePath';
 
 const StyledCoverImage = styled.img`
   border-radius: ${themeCssVariables.border.radius.sm};
@@ -61,7 +62,11 @@ export const BookCallDecision = () => {
           </Trans>
         </SubTitle>
       </StyledTitleContainer>
-      <StyledCoverImage src="/images/placeholders/onboarding-covers/onboarding-book-call-decision-cover.png" />
+      <StyledCoverImage
+        src={getPublicAssetUrl(
+          '/images/placeholders/onboarding-covers/onboarding-book-call-decision-cover.png',
+        )}
+      />
       <StyledButtonContainer>
         <StyledLinkContainer>
           <Link to={AppPath.BookCall}>

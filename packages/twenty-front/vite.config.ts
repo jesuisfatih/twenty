@@ -19,8 +19,23 @@ import { createWywProfilingPlugin } from 'twenty-shared/vite';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, __dirname, '');
 
+  const normalizeBasePath = (basePath?: string) => {
+    if (!basePath || basePath === '/') {
+      return '/';
+    }
+
+    const withLeadingSlash = basePath.startsWith('/')
+      ? basePath
+      : `/${basePath}`;
+
+    return withLeadingSlash.endsWith('/')
+      ? withLeadingSlash
+      : `${withLeadingSlash}/`;
+  };
+
   const {
     REACT_APP_SERVER_BASE_URL,
+    REACT_APP_BASE_PATH,
     VITE_BUILD_SOURCEMAP,
     VITE_HOST,
     SSL_CERT_PATH,
@@ -47,6 +62,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     root: __dirname,
+    base: normalizeBasePath(REACT_APP_BASE_PATH),
     cacheDir: '../../node_modules/.vite/packages/twenty-front',
 
     server: {

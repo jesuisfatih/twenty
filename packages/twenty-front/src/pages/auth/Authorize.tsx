@@ -15,6 +15,7 @@ import { UndecoratedLink } from 'twenty-ui/navigation';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 import { useAuthorizeAppMutation } from '~/generated-metadata/graphql';
 import { useNavigateApp } from '~/hooks/useNavigateApp';
+import { getPublicAssetUrl } from '~/utils/basePath';
 
 const StyledContainer = styled.div`
   display: flex;
@@ -179,13 +180,13 @@ export const Authorize = () => {
       <StyledCardWrapper>
         <StyledAppsContainer>
           <img
-            src="/images/integrations/twenty-logo.svg"
+            src={getPublicAssetUrl('/images/integrations/twenty-logo.svg')}
             alt="twenty-icon"
             height={40}
             width={40}
           />
           <img
-            src="/images/integrations/link-apps.svg"
+            src={getPublicAssetUrl('/images/integrations/link-apps.svg')}
             alt="link-icon"
             height={60}
             width={60}

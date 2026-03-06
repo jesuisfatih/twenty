@@ -8,6 +8,7 @@ import indexAppPath from '@/navigation/utils/indexAppPath';
 import { BlankLayout } from '@/ui/layout/page/components/BlankLayout';
 import { DefaultLayout } from '@/ui/layout/page/components/DefaultLayout';
 import { AppPath } from 'twenty-shared/types';
+import { BASE_PATH } from '~/utils/basePath';
 
 import {
   createBrowserRouter,
@@ -83,4 +84,7 @@ export const useCreateAppRouter = (
         </Route>
       </>,
     ),
+    {
+      basename: BASE_PATH,
+    },
   );
