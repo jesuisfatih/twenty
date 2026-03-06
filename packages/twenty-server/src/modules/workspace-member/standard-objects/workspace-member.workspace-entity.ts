@@ -71,6 +71,7 @@ export class WorkspaceMemberWorkspaceEntity extends BaseWorkspaceEntity {
   userEmail: string | null;
   calendarStartDay: number;
   userId: string;
+  scopedCompanyId: string | null;
   timeZone: string;
   dateFormat: string;
   timeFormat: string;

@@ -2635,6 +2635,9 @@ export const STANDARD_OBJECTS = {
       updatedBy: {
         universalIdentifier: '29f84ad0-509f-4aef-9f9c-2691dd60cd87',
       },
+      scopedCompanyId: {
+        universalIdentifier: 'ee202020-a1b2-4c3d-8e4f-5a6b7c8d9e0f',
+      },
     },
     indexes: {
       userEmailUniqueIndex: {

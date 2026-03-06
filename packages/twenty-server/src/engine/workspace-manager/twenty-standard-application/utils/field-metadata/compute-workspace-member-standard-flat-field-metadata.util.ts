@@ -451,6 +451,24 @@ export const buildWorkspaceMemberStandardFlatFieldMetadatas = ({
     twentyStandardApplicationId,
     now,
   }),
+  scopedCompanyId: createStandardFieldFlatMetadata({
+    objectName,
+    workspaceId,
+    context: {
+      fieldName: 'scopedCompanyId',
+      type: FieldMetadataType.UUID,
+      label: 'Scoped Company',
+      description:
+        'The company ID this member is scoped to (null = root admin, sees all)',
+      icon: 'IconBuildingStore',
+      isNullable: true,
+      defaultValue: null,
+    },
+    standardObjectMetadataRelatedEntityIds,
+    dependencyFlatEntityMaps,
+    twentyStandardApplicationId,
+    now,
+  }),
   assignedTasks: createStandardRelationFieldFlatMetadata({
     objectName,
     workspaceId,
