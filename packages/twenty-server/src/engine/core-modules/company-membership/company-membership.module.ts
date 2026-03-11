@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { TokenModule } from 'src/engine/core-modules/auth/token/token.module';
@@ -13,7 +13,7 @@ import { WorkspaceCacheStorageModule } from 'src/engine/workspace-cache-storage/
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserCompanyMembershipEntity]),
-    TokenModule,
+    forwardRef(() => TokenModule),
     WorkspaceCacheStorageModule,
   ],
   controllers: [MembershipManagementController, MigrationSupportController],

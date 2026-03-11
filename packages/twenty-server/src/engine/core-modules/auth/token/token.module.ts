@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { TypeORMModule } from 'src/database/typeorm/typeorm.module';
@@ -37,7 +37,7 @@ import { WorkspaceCacheModule } from 'src/engine/workspace-cache/workspace-cache
     DataSourceModule,
     PermissionsModule,
     WorkspaceCacheModule,
-    CompanyMembershipModule,
+    forwardRef(() => CompanyMembershipModule),
   ],
   providers: [
     RenewTokenService,

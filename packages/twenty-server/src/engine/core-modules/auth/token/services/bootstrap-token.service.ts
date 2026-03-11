@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { addMilliseconds } from 'date-fns';
@@ -30,6 +30,7 @@ export class BootstrapTokenService {
 
   constructor(
     private readonly jwtWrapperService: JwtWrapperService,
+    @Inject(forwardRef(() => CompanyMembershipService))
     private readonly companyMembershipService: CompanyMembershipService,
     @InjectRepository(AppTokenEntity)
     private readonly appTokenRepository: Repository<AppTokenEntity>,
