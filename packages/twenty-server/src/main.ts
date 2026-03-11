@@ -1,6 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { type NestExpressApplication } from '@nestjs/platform-express';
 
+// Must be imported before AppModule — captures process.env.SERVER_URL
+// before ConfigModule.forRoot().assignVariablesToProcess() overwrites it
+import { generateFrontConfig } from './utils/generate-front-config';
+
 import fs from 'fs';
 
 import bytes from 'bytes';
@@ -20,7 +24,6 @@ import { AppModule } from './app.module';
 import './instrument';
 
 import { settings } from './engine/constants/settings';
-import { generateFrontConfig } from './utils/generate-front-config';
 
 // Trigger
 const bootstrap = async () => {
