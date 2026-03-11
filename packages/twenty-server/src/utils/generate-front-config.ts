@@ -7,11 +7,15 @@ config({
   override: true,
 });
 
+// Capture before NestJS ConfigModule.assignVariablesToProcess
+// writes class defaults (e.g. 'http://localhost:3000') into process.env
+const ORIGINAL_SERVER_URL = process.env.SERVER_URL;
+
 export function generateFrontConfig(): void {
   const configObject = {
     window: {
       _env_: {
-        REACT_APP_SERVER_BASE_URL: process.env.SERVER_URL,
+        REACT_APP_SERVER_BASE_URL: ORIGINAL_SERVER_URL,
       },
     },
   };
