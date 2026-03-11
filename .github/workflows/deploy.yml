@@ -63,8 +63,10 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      packages: read
     env:
-      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN || secrets.GITHUB_TOKEN }}
+      GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Deploy to Server
@@ -84,9 +86,18 @@ jobs:
             docker compose pull
             echo "Restarting containers..."
             docker compose down
-            docker compose up -d
-            echo "Waiting for Twenty to be healthy..."
             set +e
+            docker compose up -d
+            UP_EXIT=$?
+            if [ $UP_EXIT -ne 0 ]; then
+              echo "docker compose up failed with exit code $UP_EXIT"
+              echo "=== twenty-server logs ==="
+              docker logs multiservice-twenty-server --tail 80 2>&1 || true
+              echo "=== twenty-dtfbank-server logs ==="
+              docker logs multiservice-twenty-dtfbank-server --tail 40 2>&1 || true
+              exit 1
+            fi
+            echo "Waiting for Twenty to be healthy..."
             for i in $(seq 1 60); do
               if docker exec multiservice-twenty-server curl -sf http://localhost:3000/healthz > /dev/null 2>&1; then
                 echo "Twenty CRM deployed successfully!"
@@ -95,5 +106,5 @@ jobs:
               sleep 5
             done
             echo "Health check timeout, checking logs..."
-            docker logs multiservice-twenty-server --tail 30
+            docker logs multiservice-twenty-server --tail 50
             exit 1
