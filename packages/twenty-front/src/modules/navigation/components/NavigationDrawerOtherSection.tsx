@@ -2,8 +2,9 @@ import { useLingui } from '@lingui/react/macro';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SettingsPath } from 'twenty-shared/types';
 import { getSettingsPath } from 'twenty-shared/utils';
-import { IconHelpCircle, IconSettings } from 'twenty-ui/display';
+import { IconHelpCircle, IconSettings, IconUsers } from 'twenty-ui/display';
 
+import { useCompanyContext } from '@/auth/hooks/useCompanyContext';
 import { currentWorkspaceMemberState } from '@/auth/states/currentWorkspaceMemberState';
 import { getDocumentationUrl } from '@/support/utils/getDocumentationUrl';
 import { isNavigationDrawerExpandedState } from '@/ui/navigation/states/isNavigationDrawerExpanded';
@@ -25,6 +26,7 @@ export const NavigationDrawerOtherSection = () => {
   const { t } = useLingui();
   const location = useLocation();
   const navigate = useNavigate();
+  const { isEmbeddedSession } = useCompanyContext();
   const currentWorkspaceMember = useAtomStateValue(currentWorkspaceMemberState);
   const [isNavigationDrawerExpanded, setIsNavigationDrawerExpanded] =
     useAtomState(isNavigationDrawerExpandedState);
@@ -70,6 +72,13 @@ export const NavigationDrawerOtherSection = () => {
             })}
             Icon={IconHelpCircle}
           />
+          {isEmbeddedSession && (
+            <NavigationDrawerItem
+              label={t`Team`}
+              to="/team"
+              Icon={IconUsers}
+            />
+          )}
         </>
       )}
     </NavigationDrawerSection>

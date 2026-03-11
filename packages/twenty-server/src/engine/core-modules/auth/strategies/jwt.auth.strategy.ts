@@ -215,6 +215,9 @@ export class JwtAuthStrategy extends PassportStrategy(Strategy, 'jwt') {
     return {
       ...context,
       workspaceMember,
+      companyId: payload.companyId,
+      companyRole: payload.companyRole,
+      isRootAdmin: payload.isRootAdmin,
     };
   }
 

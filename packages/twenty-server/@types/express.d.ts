@@ -3,6 +3,7 @@ import { type APP_LOCALES } from 'twenty-shared/translations';
 import { type ApiKey } from 'src/engine/core-modules/api-key/api-key.entity';
 import { type ApplicationEntity } from 'src/engine/core-modules/application/application.entity';
 import { type RawAuthContext } from 'src/engine/core-modules/auth/types/auth-context.type';
+import { type CompanyRole } from 'src/engine/core-modules/company-membership/enums/company-role.enum';
 import { type UserWorkspace } from 'src/engine/core-modules/user-workspace/user-workspace.entity';
 import { type User } from 'src/engine/core-modules/user/user.entity';
 import { type AuthProviderEnum } from 'src/engine/core-modules/workspace/types/workspace.type';
@@ -23,5 +24,8 @@ declare module 'express-serve-static-core' {
     userWorkspaceId?: string;
     authProvider?: AuthProviderEnum | null;
     impersonationContext?: RawAuthContext['impersonationContext'];
+    companyId?: string;
+    companyRole?: CompanyRole;
+    isRootAdmin?: boolean;
   }
 }

@@ -31,6 +31,8 @@ export enum AppPath {
 
   Authorize = '/authorize',
   IframeAuth = '/iframe-auth',
+  EmbeddedBootstrap = '/embedded/verify',
+  TeamManagement = '/team',
 
   // 404 page not found
   NotFoundWildcard = '*',

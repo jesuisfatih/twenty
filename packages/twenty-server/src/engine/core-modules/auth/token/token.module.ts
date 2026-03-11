@@ -8,10 +8,12 @@ import { ApplicationEntity } from 'src/engine/core-modules/application/applicati
 import { JwtAuthStrategy } from 'src/engine/core-modules/auth/strategies/jwt.auth.strategy';
 import { AccessTokenService } from 'src/engine/core-modules/auth/token/services/access-token.service';
 import { ApplicationTokenService } from 'src/engine/core-modules/auth/token/services/application-token.service';
+import { BootstrapTokenService } from 'src/engine/core-modules/auth/token/services/bootstrap-token.service';
 import { LoginTokenService } from 'src/engine/core-modules/auth/token/services/login-token.service';
 import { RefreshTokenService } from 'src/engine/core-modules/auth/token/services/refresh-token.service';
 import { RenewTokenService } from 'src/engine/core-modules/auth/token/services/renew-token.service';
 import { WorkspaceAgnosticTokenService } from 'src/engine/core-modules/auth/token/services/workspace-agnostic-token.service';
+import { CompanyMembershipModule } from 'src/engine/core-modules/company-membership/company-membership.module';
 import { JwtModule } from 'src/engine/core-modules/jwt/jwt.module';
 import { UserWorkspaceEntity } from 'src/engine/core-modules/user-workspace/user-workspace.entity';
 import { UserEntity } from 'src/engine/core-modules/user/user.entity';
@@ -35,6 +37,7 @@ import { WorkspaceCacheModule } from 'src/engine/workspace-cache/workspace-cache
     DataSourceModule,
     PermissionsModule,
     WorkspaceCacheModule,
+    CompanyMembershipModule,
   ],
   providers: [
     RenewTokenService,
@@ -44,6 +47,7 @@ import { WorkspaceCacheModule } from 'src/engine/workspace-cache/workspace-cache
     RefreshTokenService,
     WorkspaceAgnosticTokenService,
     ApplicationTokenService,
+    BootstrapTokenService,
   ],
   exports: [
     RenewTokenService,
@@ -52,6 +56,7 @@ import { WorkspaceCacheModule } from 'src/engine/workspace-cache/workspace-cache
     RefreshTokenService,
     WorkspaceAgnosticTokenService,
     ApplicationTokenService,
+    BootstrapTokenService,
   ],
 })
 export class TokenModule {}

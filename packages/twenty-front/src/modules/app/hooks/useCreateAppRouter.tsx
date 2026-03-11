@@ -2,6 +2,8 @@ import { AppRouterProviders } from '@/app/components/AppRouterProviders';
 import { SettingsRoutes } from '@/app/components/SettingsRoutes';
 import { VerifyLoginTokenEffect } from '@/auth/components/VerifyLoginTokenEffect';
 import { IframeAuthEffect } from '@/auth/components/IframeAuthEffect';
+import { EmbeddedBootstrapEffect } from '@/auth/components/EmbeddedBootstrapEffect';
+import { TeamManagementPage } from '@/auth/components/TeamManagementPage';
 
 import { VerifyEmailEffect } from '@/auth/components/VerifyEmailEffect';
 import indexAppPath from '@/navigation/utils/indexAppPath';
@@ -38,6 +40,7 @@ export const useCreateAppRouter = (
     createRoutesFromElements(
       <>
         <Route path={AppPath.IframeAuth} element={<IframeAuthEffect />} />
+        <Route path={AppPath.EmbeddedBootstrap} element={<EmbeddedBootstrapEffect />} />
         <Route
           element={<AppRouterProviders />}
           // To switch state to `loading` temporarily to enable us
@@ -67,6 +70,7 @@ export const useCreateAppRouter = (
             <Route path={indexAppPath.getIndexAppPath()} element={<></>} />
             <Route path={AppPath.RecordIndexPage} element={<RecordIndexPage />} />
             <Route path={AppPath.RecordShowPage} element={<RecordShowPage />} />
+            <Route path={AppPath.TeamManagement} element={<TeamManagementPage />} />
             <Route
               path={AppPath.SettingsCatchAll}
               element={

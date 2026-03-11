@@ -54,6 +54,9 @@ export class AccessTokenService {
     isImpersonating,
     impersonatorUserWorkspaceId,
     impersonatedUserWorkspaceId,
+    companyId,
+    companyRole,
+    isRootAdmin,
   }: Omit<
     AccessTokenJwtPayload,
     'type' | 'workspaceMemberId' | 'userWorkspaceId' | 'sub'
@@ -139,6 +142,9 @@ export class AccessTokenService {
       isImpersonating: isImpersonating === true,
       impersonatorUserWorkspaceId: payloadImpersonatorUserWorkspaceId,
       impersonatedUserWorkspaceId: payloadOriginalUserWorkspaceId,
+      companyId,
+      companyRole,
+      isRootAdmin,
     };
 
     return {

@@ -13,6 +13,7 @@ import { AuditModule } from 'src/engine/core-modules/audit/audit.module';
 import { GoogleAPIsAuthController } from 'src/engine/core-modules/auth/controllers/google-apis-auth.controller';
 import { GoogleAuthController } from 'src/engine/core-modules/auth/controllers/google-auth.controller';
 import { IframeAuthController } from 'src/engine/core-modules/auth/controllers/iframe-auth.controller';
+import { FactoryBootstrapController } from 'src/engine/core-modules/auth/controllers/factory-bootstrap.controller';
 import { MicrosoftAPIsAuthController } from 'src/engine/core-modules/auth/controllers/microsoft-apis-auth.controller';
 import { MicrosoftAuthController } from 'src/engine/core-modules/auth/controllers/microsoft-auth.controller';
 import { OAuthPropagatorController } from 'src/engine/core-modules/auth/controllers/oauth-propagator.controller';
@@ -32,6 +33,7 @@ import { SamlAuthStrategy } from 'src/engine/core-modules/auth/strategies/saml.a
 import { AccessTokenService } from 'src/engine/core-modules/auth/token/services/access-token.service';
 import { LoginTokenService } from 'src/engine/core-modules/auth/token/services/login-token.service';
 import { RefreshTokenService } from 'src/engine/core-modules/auth/token/services/refresh-token.service';
+import { BootstrapTokenService } from 'src/engine/core-modules/auth/token/services/bootstrap-token.service';
 import { TransientTokenService } from 'src/engine/core-modules/auth/token/services/transient-token.service';
 import { TokenModule } from 'src/engine/core-modules/auth/token/token.module';
 import { DomainServerConfigModule } from 'src/engine/core-modules/domain/domain-server-config/domain-server-config.module';
@@ -47,6 +49,7 @@ import { KeyValuePairEntity } from 'src/engine/core-modules/key-value-pair/key-v
 import { MetricsModule } from 'src/engine/core-modules/metrics/metrics.module';
 import { OnboardingModule } from 'src/engine/core-modules/onboarding/onboarding.module';
 import { SecureHttpClientModule } from 'src/engine/core-modules/secure-http-client/secure-http-client.module';
+import { CompanyMembershipModule } from 'src/engine/core-modules/company-membership/company-membership.module';
 import { WorkspaceSSOModule } from 'src/engine/core-modules/sso/sso.module';
 import { WorkspaceSSOIdentityProviderEntity } from 'src/engine/core-modules/sso/workspace-sso-identity-provider.entity';
 import { TwoFactorAuthenticationMethodEntity } from 'src/engine/core-modules/two-factor-authentication/entities/two-factor-authentication-method.entity';
@@ -124,6 +127,7 @@ import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
     WorkspaceCacheStorageModule,
     SecureHttpClientModule,
     FileModule,
+    CompanyMembershipModule,
   ],
   controllers: [
     GoogleAuthController,
@@ -133,6 +137,7 @@ import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
     OAuthPropagatorController,
     SSOAuthController,
     IframeAuthController,
+    FactoryBootstrapController,
   ],
   providers: [
     SignInUpService,
@@ -158,12 +163,14 @@ import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
     CreateConnectedAccountService,
     UpdateConnectedAccountOnReconnectService,
     TransientTokenService,
+    BootstrapTokenService,
     AuthSsoService,
   ],
   exports: [
     AccessTokenService,
     LoginTokenService,
     RefreshTokenService,
+    BootstrapTokenService,
     CreateMessageChannelService,
     CreateCalendarChannelService,
   ],
