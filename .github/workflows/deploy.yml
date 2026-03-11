@@ -63,6 +63,8 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN || secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Deploy to Server
@@ -72,9 +74,12 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           command_timeout: 10m
+          envs: GHCR_TOKEN
           script: |
             set -e
             cd /opt/apps/custom/multiservice/twenty
+            echo "Logging in to GHCR..."
+            echo "$GHCR_TOKEN" | docker login ghcr.io -u jesuisfatih --password-stdin
             echo "Pulling latest images..."
             docker compose pull
             echo "Restarting containers..."
