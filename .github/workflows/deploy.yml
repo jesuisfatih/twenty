@@ -45,7 +45,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Build and push DTFBank CRM image
+      - name: Build and push Embedded CRM image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -54,7 +54,6 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:dtfbank
           build-args: |
-            REACT_APP_SERVER_BASE_URL=https://app.dtfbank.com/crm-app
             REACT_APP_BASE_PATH=/crm-app/
           cache-from: type=gha
           cache-to: type=gha,mode=max
