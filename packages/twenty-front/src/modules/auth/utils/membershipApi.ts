@@ -8,7 +8,7 @@ async function apiRequest<T>(
   options: RequestInit = {},
 ): Promise<T> {
   const token = localStorage.getItem('tokenPair')
-    ? JSON.parse(localStorage.getItem('tokenPair')!).accessToken?.token
+    ? JSON.parse(localStorage.getItem('tokenPair')!).accessOrWorkspaceAgnosticToken?.token
     : null;
 
   const response = await fetch(`${BASE}${path}`, {

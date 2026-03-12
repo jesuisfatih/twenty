@@ -51,6 +51,8 @@ export const createAtomState = <ValueType>({
     baseAtom = atomWithStorage<ValueType>(
       key,
       defaultValue,
+      undefined,
+      { getOnInit: true },
     ) as StateAtom<ValueType>;
   } else {
     baseAtom = atom(defaultValue);
