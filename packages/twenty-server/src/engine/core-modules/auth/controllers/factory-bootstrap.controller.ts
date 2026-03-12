@@ -11,6 +11,8 @@ import {
 import { randomUUID } from 'crypto';
 
 import { type Request } from 'express';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import {
   AuthException,
@@ -23,6 +25,9 @@ import { RefreshTokenService } from 'src/engine/core-modules/auth/token/services
 import { JwtTokenTypeEnum } from 'src/engine/core-modules/auth/types/auth-context.type';
 import { CompanyRole } from 'src/engine/core-modules/company-membership/enums/company-role.enum';
 import { CompanyMembershipService } from 'src/engine/core-modules/company-membership/services/company-membership.service';
+import { UserEntity } from 'src/engine/core-modules/user/user.entity';
+import { UserWorkspaceService } from 'src/engine/core-modules/user-workspace/user-workspace.service';
+import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { JwtAuthGuard } from 'src/engine/guards/jwt-auth.guard';
 import { AuthProviderEnum } from 'src/engine/core-modules/workspace/types/workspace.type';
 
@@ -35,6 +40,12 @@ interface ExchangeRequestBody {
   bootstrapToken: string;
 }
 
+interface ProvisionUserRequestBody {
+  email: string;
+  firstName?: string;
+  lastName?: string;
+}
+
 @Controller('auth/factory')
 @UseFilters(AuthRestApiExceptionFilter)
 export class FactoryBootstrapController {
@@ -45,6 +56,11 @@ export class FactoryBootstrapController {
     private readonly accessTokenService: AccessTokenService,
     private readonly refreshTokenService: RefreshTokenService,
     private readonly companyMembershipService: CompanyMembershipService,
+    private readonly userWorkspaceService: UserWorkspaceService,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(WorkspaceEntity)
+    private readonly workspaceRepository: Repository<WorkspaceEntity>,
   ) {}
 
   /**
@@ -161,6 +177,85 @@ export class FactoryBootstrapController {
         token: refreshToken.token,
         expiresAt: refreshToken.expiresAt.toISOString(),
       },
+    };
+  }
+
+  /**
+   * POST /auth/factory/provision-user
+   *
+   * Server-to-server endpoint. Authenticated via API key.
+   * Creates or finds a Twenty user by email, ensures they are a workspace member.
+   * Returns the Twenty internal userId for use with /auth/factory/bootstrap.
+   */
+  @Post('provision-user')
+  @UseGuards(JwtAuthGuard)
+  async provisionUser(
+    @Body() body: ProvisionUserRequestBody,
+    @Req() req: Request,
+  ) {
+    const workspace = (req as any).workspace;
+    const correlationId = this.getCorrelationId(req);
+
+    if (!workspace) {
+      throw new AuthException(
+        'Workspace context required',
+        AuthExceptionCode.WORKSPACE_NOT_FOUND,
+      );
+    }
+
+    if (!body.email) {
+      throw new AuthException(
+        'email is required',
+        AuthExceptionCode.INVALID_INPUT,
+      );
+    }
+
+    // Step 1: Find or create user
+    let user = await this.userRepository.findOne({
+      where: { email: body.email },
+    });
+
+    let created = false;
+
+    if (!user) {
+      user = await this.userRepository.save(
+        this.userRepository.create({
+          email: body.email,
+          firstName: body.firstName || '',
+          lastName: body.lastName || '',
+          canImpersonate: false,
+          canAccessFullAdminPanel: false,
+        }),
+      );
+      created = true;
+      this.logger.log(
+        `Factory provision: created user ${body.email} id=${user.id} correlationId=${correlationId}`,
+      );
+    }
+
+    // Step 2: Ensure user is in workspace (creates UserWorkspace + WorkspaceMember)
+    try {
+      const fullWorkspace = await this.workspaceRepository.findOneOrFail({
+        where: { id: workspace.id },
+      });
+
+      await this.userWorkspaceService.addUserToWorkspaceIfUserNotInWorkspace(
+        user,
+        fullWorkspace,
+      );
+    } catch (err: any) {
+      this.logger.warn(
+        `Factory provision: workspace membership setup warning for ${body.email}: ${err.message} correlationId=${correlationId}`,
+      );
+    }
+
+    this.logger.log(
+      `Factory provision complete: email=${body.email} userId=${user.id} created=${created} correlationId=${correlationId}`,
+    );
+
+    return {
+      userId: user.id,
+      created,
     };
   }
 
